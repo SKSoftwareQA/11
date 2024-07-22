@@ -1,0 +1,15 @@
+import pytest
+from playwright.sync_api import sync_playwright
+from test_login_nop import login
+
+
+class test_001_login:
+    baseurl="https://admin-demo.nopcommerce.com/login?ReturnUrl=%2Fadmin%2F"
+    username="admin@yourstore.com"
+    password="admin"
+
+
+def test_login(self):
+    browser.goto(baseurl)
+
+

@@ -1,0 +1,46 @@
+from playwright.sync_api import sync_playwright
+from playwright.sync_api._generated import Browser
+import pytest
+
+class login:
+    url_page = "https://www.saucedemo.com/"
+    textbox_email_id = "visual_user"
+    textbox_password_id = "secret_sauce"
+    button_login_xpath = "//button[@class='button-1 login-button']"
+    button_logout_xpath = "//a[@href='/logout']"
+
+
+@pytest.fixture(scope="module")
+def browser():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)
+        yield browser
+        browser.close()
+
+@pytest.fixture(scope="function")
+def page(browser: Browser):
+    page = browser.new_page()
+    yield page
+    page.close()
+
+
+def init(self, driver):
+    self.driver=driver
+
+
+def setUsername(self, username):
+    self.driver.wait_for_selector(self.textbox_email_id).keys(login)
+
+def setPassword(self, password):
+    self.driver.wait_for_selector(self.textbox_password_id).keys(login)
+
+def clickLogin(self):
+    self.driver.wait_for_selector(self.button_login_xpath).click()
+
+def clickLogout(self):
+    self.driver.wait_for_selector(self.button_logout_xpath).click()
+
+
+def test_TC_o1_login(page):
+    page.goto.url_page()
+
